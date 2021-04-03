@@ -37,7 +37,7 @@ delta_years = (now - founded_at).days // 365
 
 template = env.get_template('template.html')
 
-rendered_page = template.render(wines=wines)
+rendered_page = template.render(wines=wines, delta_years=delta_years)
 
 with open('index.html', 'w', encoding="utf8") as file:
     file.write(rendered_page)
