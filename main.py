@@ -11,9 +11,9 @@ env = Environment(
 )
 
 
-df = pandas.read_excel('wine3.xlsx', sheet_name='Лист1')
-df.fillna("", inplace=True)
-df.rename(
+excel_table = pandas.read_excel('wine3.xlsx', sheet_name='Лист1')
+excel_table.fillna("", inplace=True)
+excel_table.rename(
     columns={
         'Категория': 'category',
         'Название': 'title',
@@ -25,7 +25,8 @@ df.rename(
     inplace=True
 )
 
-wines_from_excel = df.to_dict(orient='record')
+wines_from_excel = excel_table.to_dict(orient='record')
+
 wines = defaultdict(list)
 
 for wine in wines_from_excel:
