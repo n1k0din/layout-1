@@ -39,6 +39,10 @@ def get_args_from_parser(parser):
     return args.input, args.host, args.port
 
 
+def get_winery_age(founded_year=1920):
+    return datetime.datetime.now().year - founded_year
+
+
 if __name__ == '__main__':
     parser = create_parser()
     input_filename, host, port = get_args_from_parser(parser)
@@ -50,32 +54,19 @@ if __name__ == '__main__':
 
     excel_table = pandas.read_excel(input_filename)
     excel_table.fillna("", inplace=True)
-    excel_table.rename(
-        columns={
-            'Категория': 'category',
-            'Название': 'title',
-            'Сорт': 'sort',
-            'Цена': 'price',
-            'Картинка': 'image',
-            'Акция': 'sale',
-        },
-        inplace=True
-    )
 
     wines_from_excel = excel_table.to_dict(orient='record')
 
     wines = defaultdict(list)
 
     for wine in wines_from_excel:
-        wines[wine['category']].append(wine)
+        wines[wine['Категория']].append(wine)
 
-    now = datetime.datetime.now()
-    founded_at = datetime.datetime(year=1920, month=1, day=1)
-    delta_years = (now - founded_at).days // 365
+    company_age = get_winery_age()
 
     template = env.get_template('template.html')
 
-    rendered_page = template.render(wines=wines, delta_years=delta_years)
+    rendered_page = template.render(wines=wines, delta_years=company_age)
 
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
