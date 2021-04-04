@@ -43,15 +43,7 @@ def get_winery_age(founded_year=1920):
     return datetime.datetime.now().year - founded_year
 
 
-if __name__ == '__main__':
-    parser = create_parser()
-    input_filename, host, port = get_args_from_parser(parser)
-
-    env = Environment(
-        loader=FileSystemLoader('.'),
-        autoescape=select_autoescape(['html', 'xml'])
-    )
-
+def get_wines_from_excel(input_filename):
     excel_table = pandas.read_excel(input_filename)
     excel_table.fillna("", inplace=True)
 
@@ -62,14 +54,32 @@ if __name__ == '__main__':
     for wine in wines_from_excel:
         wines[wine['Категория']].append(wine)
 
-    company_age = get_winery_age()
+    return wines
+
+
+def main():
+    env = Environment(
+        loader=FileSystemLoader('.'),
+        autoescape=select_autoescape(['html', 'xml'])
+    )
+
+    parser = create_parser()
+    input_filename, host, port = get_args_from_parser(parser)
+
+    wines = get_wines_from_excel(input_filename)
+
+    winery_age = get_winery_age()
 
     template = env.get_template('template.html')
 
-    rendered_page = template.render(wines=wines, delta_years=company_age)
+    rendered_page = template.render(wines=wines, winery_age=winery_age)
 
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
 
     server = HTTPServer((host, port), SimpleHTTPRequestHandler)
     server.serve_forever()
+
+
+if __name__ == '__main__':
+    main()
