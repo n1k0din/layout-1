@@ -7,7 +7,7 @@ import pandas
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
-def create_parser():
+def create_arguments_parser():
     parser = argparse.ArgumentParser(description='Запускает сайт про вина')
     parser.add_argument(
         '-i',
@@ -63,8 +63,8 @@ def main():
         autoescape=select_autoescape(['html', 'xml'])
     )
 
-    parser = create_parser()
-    input_filename, host, port = get_args_from_parser(parser)
+    arg_parser = create_arguments_parser()
+    input_filename, host, port = get_args_from_parser(arg_parser)
 
     wines = get_wines_from_excel(input_filename)
 
