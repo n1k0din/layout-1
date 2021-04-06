@@ -6,13 +6,33 @@
 ## Запуск
 
 1. Скачайте код и перейдите в папку проекта
-  - `git clone https://github.com/n1k0din/layout-1.git`  
-  - `cd layout-1`
-2. Установите вирт. окружение `python -m venv venv`
-3. Активируйте `venv\Scripts\activate.bat` (windows) или `source venv/bin/activate` (nix)
-4. Установите необходимые пакеты `pip install -r requirements.txt`
+  ```bash
+  git clone https://github.com/n1k0din/layout-1.git
+  ```  
+  ```bash
+  cd layout-1
+  ```
+2. Установите вирт. окружение
+```bash
+python -m venv venv
+```
+3. Активируйте
+```bash
+venv\Scripts\activate.bat
+```
+ или
+ ```bash
+ source venv/bin/activate
+ ```
+4. Установите необходимые пакеты
+```bash
+pip install -r requirements.txt
+```
 5. Подготовьте входные данные (см. пример ниже или файл по-умолчанию wine.xlsx)
-6. Запустите сайт командой `python main.py`
+6. Запустите сайт командой
+```bash
+python main.py
+```
 7. Перейдите на сайт по адресу [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## Пример входных данных
