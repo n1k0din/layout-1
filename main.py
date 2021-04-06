@@ -1,6 +1,6 @@
+import argparse
 import datetime
 from collections import defaultdict
-import argparse
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 import pandas
